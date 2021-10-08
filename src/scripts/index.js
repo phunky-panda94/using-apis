@@ -1,4 +1,4 @@
-import { apiKey } from '../../api.js';
+import apiKey from '../../api.js';
 
 const img = document.querySelector('img');
 const refresh = document.querySelector('button');
@@ -6,18 +6,13 @@ const search = document.querySelector('form');
 
 let keyword = 'cats';
 
-const fetchData = (keyword) => {
+const fetchData = async (keyword) => {
     
     let data = `https://api.giphy.com/v1/gifs/translate?api_key=${apiKey}=${keyword}`
 
-    fetch(data, {
-        mode: 'cors'
-    }).then((response) => {
-        return response.json();
-    }).then((response) => {
-        console.log(response.data);
-        img.src = response.data.images.original.url;
-    });
+    const response = await fetch(data, {mode: 'cors'})
+    const responseData = await response.json();
+    img.src = responseData.data.images.original.url;
 
 }
 
